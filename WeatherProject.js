@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    Platform,
+    ImageBackground,
     StyleSheet,
     Text,
     TextInput,
@@ -28,14 +28,27 @@ export default class WeatherProject extends Component {
         }
 
         return (
-            <View>
-                <Text style={styles.welcome}>
-                    You input {this.state.zip}.
-                </Text>
-                {content}
-                <TextInput style={styles.input}
-                    onSubmitEditing={this._handleTextChange}/>
-
+            <View style={styles.container}>
+                <ImageBackground
+                    source={require("./flowers.png")}
+                    resizeMode="cover"
+                    style={styles.backdrop}
+                >
+                    <View style={styles.overlay}>
+                        <View style={styles.row}>
+                            <Text style={styles.mainText}>
+                                Current weather for
+                            </Text>
+                            <View style={styles.zipContainer}>
+                                <TextInput style={[styles.zipCode, styles.mainText]}
+                                    onSubmitEditing={this._handleTextChange}
+                                    underlineColorAndroid = "transparent"
+                                />
+                            </View>
+                        </View>
+                        {content}
+                    </View>
+                </ImageBackground>
             </View>
         );
     }
@@ -50,23 +63,48 @@ export default class WeatherProject extends Component {
     }
 }
 
+const baseFontSize = 16;
+
 const styles = StyleSheet.create({
-    welcome: {
-        fontSize: 20,
-        textAlign: "center",
-        margin: 10
-    },
-    input: {
-        fontSize: 20,
-        borderWidth: 2,
-        height: 40,
-        width: 100,
-        textAlign: "center"
-    },
     container: {
         flex: 1,
-        justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#666666"
+        paddingTop: 30
+    },
+    backdrop: {
+        flex: 1,
+        flexDirection: "column"
+    },
+    overlay: {
+        paddingTop: 5,
+        backgroundColor: "black",
+        opacity: 0.5,
+        flexDirection: "column",
+        alignItems: "center"
+    },
+    row: {
+        flexDirection: "row",
+        flexWrap: "nowrap",
+        alignItems: "flex-start",
+        padding: 30
+    },
+    zipContainer: {
+        height: baseFontSize + 10,
+        borderBottomColor: "#DDDDDD",
+        borderBottomWidth: 1,
+        marginLeft: 5,
+        marginTop: 3
+    },
+    zipCode: {
+        flex: 1,
+        flexBasis: 1,
+        width: 50,
+        height: baseFontSize 
+    },
+    mainText: {
+        fontSize: baseFontSize,
+        color: "white"
     }
+
+
 });
